@@ -9,7 +9,7 @@ contract DeployTokenFactory is Script {
         0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80;
     uint256 public deployerKey;
     address public ownerAddress = vm.envAddress("OWNER_ADDRESS");
-    address public tokenV1Address = 0x29A07C9880DF4379454dac446599d5554E5C4489;
+    address public tokenV1Address = vm.envAddress("DEPLOYED_V1_ADDRESS");
     function run() external returns (TokenFactory) {
         if (block.chainid == 31337) {
             deployerKey = DEFAULT_ANVIL_PRIVATE_KEY;

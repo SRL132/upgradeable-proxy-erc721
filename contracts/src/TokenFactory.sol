@@ -15,7 +15,6 @@ contract TokenFactory is Ownable {
         address initialOwner
     ) Ownable(initialOwner) {
         beacon = new UpgradeableBeacon(implementationAddress, address(this));
-        //  transferOwnership(msg.sender);
     }
 
     function upgradeImplementation(address newImplementation) public onlyOwner {

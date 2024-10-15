@@ -8,13 +8,14 @@ import {Test, console} from "forge-std/Test.sol";
 
 contract ClonesTest is Test {
     address public OWNER = makeAddr("owner");
-    string constant tokenName = "TestToken";
-    string constant tokenSymbol = "TEST";
+    string constant TOKEN_NAME = "TestToken";
+    string constant TOKEN_SYMBOL = "TEST";
+
     function testCreateTokenV1() public {
         vm.startPrank(OWNER);
         TokenV1 token = new TokenV1();
         TokenFactory factory = new TokenFactory(address(token), OWNER);
-        factory.createToken(tokenName, tokenSymbol);
+        factory.createToken(TOKEN_NAME, TOKEN_SYMBOL);
         vm.stopPrank();
     }
     function testCreateAndUpgradeToV2() public {
@@ -22,10 +23,10 @@ contract ClonesTest is Test {
         TokenV1 token = new TokenV1();
         TokenFactory factory = new TokenFactory(address(token), OWNER);
         TokenV2 token2 = new TokenV2();
-        factory.createToken(tokenName, tokenSymbol);
+        factory.createToken(TOKEN_NAME, TOKEN_SYMBOL);
         address updatedTokenAddress = factory.createToken(
-            tokenName,
-            tokenSymbol
+            TOKEN_NAME,
+            TOKEN_SYMBOL
         );
         factory.upgradeImplementation(address(token2));
         assertEq(TokenV2(updatedTokenAddress).version(), "V2");
@@ -38,8 +39,8 @@ contract ClonesTest is Test {
         TokenFactory factory = new TokenFactory(address(token), OWNER);
         TokenV2 token2 = new TokenV2();
         address updatedTokenAddress = factory.createToken(
-            tokenName,
-            tokenSymbol
+            TOKEN_NAME,
+            TOKEN_SYMBOL
         );
         TokenV1(updatedTokenAddress).setStore(x);
         assertEq(TokenV1(updatedTokenAddress).s_store(), x);
@@ -58,14 +59,14 @@ contract ClonesTest is Test {
         TokenFactory factory = new TokenFactory(address(token), OWNER);
         TokenV2 token2 = new TokenV2();
         address updatedTokenAddress = factory.createToken(
-            tokenName,
-            tokenSymbol
+            TOKEN_NAME,
+            TOKEN_SYMBOL
         );
         TokenV1(updatedTokenAddress).setStore(x);
         assertEq(TokenV1(updatedTokenAddress).s_store(), x);
         address updatedTokenAddress2 = factory.createToken(
-            tokenName,
-            tokenSymbol
+            TOKEN_NAME,
+            TOKEN_SYMBOL
         );
         TokenV1(updatedTokenAddress2).setStore(y);
         assertEq(TokenV1(updatedTokenAddress2).s_store(), y);

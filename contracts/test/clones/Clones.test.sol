@@ -10,6 +10,7 @@ contract ClonesTest is Test {
     address public OWNER = makeAddr("owner");
     string constant TOKEN_NAME = "TestToken";
     string constant TOKEN_SYMBOL = "TEST";
+    string constant V2 = "V2";
 
     function testCreateTokenV1() public {
         vm.startPrank(OWNER);
@@ -29,7 +30,7 @@ contract ClonesTest is Test {
             TOKEN_SYMBOL
         );
         factory.upgradeImplementation(address(token2));
-        assertEq(TokenV2(updatedTokenAddress).version(), "V2");
+        assertEq(TokenV2(updatedTokenAddress).version(), V2);
         vm.stopPrank();
     }
 
@@ -46,7 +47,7 @@ contract ClonesTest is Test {
         assertEq(TokenV1(updatedTokenAddress).s_store(), x);
         factory.upgradeImplementation(address(token2));
         assertEq(TokenV2(updatedTokenAddress).s_store(), x);
-        assertEq(TokenV2(updatedTokenAddress).version(), "V2");
+        assertEq(TokenV2(updatedTokenAddress).version(), V2);
         vm.stopPrank();
     }
 
@@ -73,8 +74,8 @@ contract ClonesTest is Test {
         factory.upgradeImplementation(address(token2));
         assertEq(TokenV2(updatedTokenAddress).s_store(), x);
         assertEq(TokenV2(updatedTokenAddress2).s_store(), y);
-        assertEq(TokenV2(updatedTokenAddress).version(), "V2");
-        assertEq(TokenV2(updatedTokenAddress2).version(), "V2");
+        assertEq(TokenV2(updatedTokenAddress).version(), V2);
+        assertEq(TokenV2(updatedTokenAddress2).version(), V2);
         vm.stopPrank();
     }
 }

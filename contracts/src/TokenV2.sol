@@ -5,13 +5,13 @@ import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Ini
 import {ERC721Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 
 contract TokenV2 is Initializable, ERC721Upgradeable {
-    uint256 public store;
+    uint256 public s_store;
 
     function version() public pure returns (string memory) {
         return "V2";
     }
 
     function setStore(uint256 newValue) public {
-        store = newValue;
+        s_store = newValue;
     }
 }

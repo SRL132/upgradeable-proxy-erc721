@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {TokenV1} from "../../../src/TokenV1.sol";
-import {TokenV2} from "../../../src/TokenV2.sol";
-import {TokenFactory} from "../../../src/TokenFactory.sol";
+import {TokenV1} from "../../src/TokenV1.sol";
+import {TokenV2} from "../../src/TokenV2.sol";
+import {TokenFactory} from "../../src/TokenFactory.sol";
 import {Test, console} from "forge-std/Test.sol";
 
 contract ClonesTest is Test {
@@ -42,9 +42,9 @@ contract ClonesTest is Test {
             tokenSymbol
         );
         TokenV1(updatedTokenAddress).setStore(x);
-        assertEq(TokenV1(updatedTokenAddress).store(), x);
+        assertEq(TokenV1(updatedTokenAddress).s_store(), x);
         factory.upgradeImplementation(address(token2));
-        assertEq(TokenV2(updatedTokenAddress).store(), x);
+        assertEq(TokenV2(updatedTokenAddress).s_store(), x);
         assertEq(TokenV2(updatedTokenAddress).version(), "V2");
         vm.stopPrank();
     }
@@ -62,16 +62,16 @@ contract ClonesTest is Test {
             tokenSymbol
         );
         TokenV1(updatedTokenAddress).setStore(x);
-        assertEq(TokenV1(updatedTokenAddress).store(), x);
+        assertEq(TokenV1(updatedTokenAddress).s_store(), x);
         address updatedTokenAddress2 = factory.createToken(
             tokenName,
             tokenSymbol
         );
         TokenV1(updatedTokenAddress2).setStore(y);
-        assertEq(TokenV1(updatedTokenAddress2).store(), y);
+        assertEq(TokenV1(updatedTokenAddress2).s_store(), y);
         factory.upgradeImplementation(address(token2));
-        assertEq(TokenV2(updatedTokenAddress).store(), x);
-        assertEq(TokenV2(updatedTokenAddress2).store(), y);
+        assertEq(TokenV2(updatedTokenAddress).s_store(), x);
+        assertEq(TokenV2(updatedTokenAddress2).s_store(), y);
         assertEq(TokenV2(updatedTokenAddress).version(), "V2");
         assertEq(TokenV2(updatedTokenAddress2).version(), "V2");
         vm.stopPrank();
